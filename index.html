@@ -1,1 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Selvam Jewellery - Kavindapadi</title>
 
+<style>
+body{
+margin:0;
+font-family:Georgia, serif;
+background:black;
+color:white;
+text-align:center;
+}
+
+header{
+background:linear-gradient(90deg,#b8860b,#d4af37);
+padding:25px;
+}
+
+nav{
+background:#111;
+padding:15px;
+}
+
+nav a{
+color:gold;
+margin:0 15px;
+text-decoration:none;
+font-weight:bold;
+}
+
+.section{
+padding:60px 20px;
+}
+
+.rate-box{
+background:#111;
+border:1px solid gold;
+display:inline-block;
+padding:25px 40px;
+border-radius:10px;
+font-size:20px;
+}
+
+.gallery{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:20px;
+}
+
+.gallery img{
+width:250px;
+height:250px;
+object-fit:cover;
+border-radius:10px;
+border:2px solid gold;
+}
+
+footer{
+background:#111;
+padding:20px;
+}
+
+.whatsapp{
+position:fixed;
+bottom:20px;
+right:20px;
+background:gold;
+color:black;
+padding:15px;
+border-radius:50%;
+text-decoration:none;
+font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Selvam Jewellery</h1>
+<p>Kavindapadi, Erode</p>
+<p>📞 9443399877</p>
+</header>
+
+<nav>
+<a href="#rate">Gold & Silver Rate</a>
+<a href="#gallery">Gallery</a>
+<a href="#contact">Contact</a>
+</nav>
+
+<section class="section" id="rate">
+<h2>Live Gold & Silver Rate</h2>
+<div class="rate-box">
+<p>24K Gold: ₹ <span id="rate24">Loading...</span></p>
+<p>22K Gold: ₹ <span id="rate22">Loading...</span></p>
+<p>Silver: ₹ <span id="rateSilver">Loading...</span></p>
+<p style="font-size:14px;">(Auto Updated)</p>
+</div>
+</section>
+
+<section class="section" id="gallery">
+<h2>Our Jewellery Collection</h2>
+<div class="gallery">
+<img src="https://images.unsplash.com/photo-1601121141461-9d6647bca1ed">
+<img src="https://images.unsplash.com/photo-1611652022419-a9419f74343d">
+<img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f">
+<img src="https://images.unsplash.com/photo-1588444650700-6d5c0a07f7af">
+</div>
+</section>
+
+<section class="section" id="contact">
+<h2>Visit Our Store</h2>
+<p>Kavindapadi, Erode, Tamil Nadu</p>
+
+<iframe 
+src="https://www.google.com/maps?q=Kavindapadi,Erode&output=embed"
+width="100%" height="300" style="border:0;">
+</iframe>
+
+</section>
+
+<footer>
+<p>© 2026 Selvam Jewellery</p>
+</footer>
+
+<a href="https://wa.me/919443399877" class="whatsapp">WA</a>
+
+<script>
+async function getRates() {
+const apiKey = "YOUR_API_KEY_HERE";
+
+const goldRes = await fetch("https://www.goldapi.io/api/XAU/INR", {
+headers: {
+"x-access-token": apiKey,
+"Content-Type": "application/json"
+}
+});
+const goldData = await goldRes.json();
+
+const silverRes = await fetch("https://www.goldapi.io/api/XAG/INR", {
+headers: {
+"x-access-token": apiKey,
+"Content-Type": "application/json"
+}
+});
+const silverData = await silverRes.json();
+
+const gold24 = (goldData.price / 31.1035).toFixed(0);
+const gold22 = (gold24 * 0.916).toFixed(0);
+const silver = (silverData.price / 31.1035).toFixed(2);
+
+document.getElementById("rate24").innerText = gold24;
+document.getElementById("rate22").innerText = gold22;
+document.getElementById("rateSilver").innerText = silver;
+}
+
+getRates();
+</script>
+
+</body>
+</html>
